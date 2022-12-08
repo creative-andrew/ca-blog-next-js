@@ -1,6 +1,6 @@
 async function fetchClient(query = "", variables = {}, cachePolicy = {}) {
   const res = await fetch(
-    "http://cablogwordpress.local/graphql",
+    `http://${process.env.WORDPRESS_URL}/graphql`,
     {
       method: "POST",
       headers: {
