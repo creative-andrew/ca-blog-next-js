@@ -9,7 +9,7 @@ function BlogPostListItem({ post: { slug, title, excerpt, tags: { nodes: tags },
       <h2 className="text-xl text-gray-200 hover:text-gray-100">
         <Link href={`/posts/${slug}`}>{title}</Link>
       </h2>
-      <div className="flex items-center pt-2 pb-4 text-sm">
+      <div className="flex flex-wrap gap-2 items-center pt-2 pb-4 text-sm">
         <Date dateString={date}></Date>
         {tags &&
         <ul className="inline-flex gap-2">
