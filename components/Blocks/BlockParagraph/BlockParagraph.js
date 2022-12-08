@@ -8,10 +8,10 @@ function BlockParagraph({ align, anchor, content }) {
     ${align === "center" ? "text-center" : align === "right" ? "text-right" : "text-left" }`}>
       {parse(content, {
         replace: (domNode) => {
-          if (domNode.name === "a") {
+          if (domNode?.name === "a") {
             return (
-              <Link href={domNode.attribs.href}>
-                {domNode.children[0]?.data}
+              <Link target={domNode?.attribs?.target} href={domNode?.attribs?.href}>
+                {domNode?.children[0]?.data}
               </Link>
             );
           }
