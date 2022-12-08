@@ -4,6 +4,14 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: process.env.WORDPRESS_URL,
+      },
+    ],
+  },
 }
 
 module.exports = nextConfig

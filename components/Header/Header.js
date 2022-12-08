@@ -2,7 +2,7 @@ import Link from "next/link";
 import {React, dangerouslySetInnerHTML} from "react";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
 import fetchClient from "../../app/fetch-client";
-import headerAndMenus from "../../lib/queries/headerAndMenus";
+import headerAndMenus from "../../lib/queries/headerAndMenusQuery";
 
 const getHeaderAndMenus = async () => {
   const res = await fetchClient(headerAndMenus);

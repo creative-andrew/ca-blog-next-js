@@ -1,5 +1,5 @@
 import fetchClient from "./fetch-client";
-import headerAndMenus from "../lib/queries/headerAndMenus";
+import headerAndMenus from "../lib/queries/headerAndMenusQuery";
 
 const getHeaderAndMenus = async () => {
   const res = await fetchClient(headerAndMenus);

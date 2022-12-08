@@ -1,28 +1,9 @@
 import React from "react";
 import Blocks from "../../../components/Blocks/Blocks";
 import fetchClient from "../../fetch-client";
-
+import postBySlugQuery from "../../../lib/queries/postBySlugQuery";
 const postBySlug = (slug) =>
-  fetchClient(
-    `
-    query postBySlug($id: ID!) {
-        post(id: $id, idType: SLUG) {
-          title
-          blocks {
-            ... on CoreParagraphBlock {
-              name
-              attributes {
-                ... on CoreParagraphBlockAttributes {
-                  align
-                  anchor
-                  content
-                }
-              }
-            }
-          }
-        }
-      }
-`,
+  fetchClient(postBySlugQuery,
     {
       id: slug,
     }
@@ -35,7 +16,7 @@ async function SinglePost({ params }) {
   return (
     <section>
       <h2 className="text-gray-50 text-3xl pb-5">{post.title}</h2>
-      <Blocks blocks={post.blocks}/>
+      <Blocks blocks={JSON.parse(post.blocksJSON)}/>
     </section>
   );
 }
