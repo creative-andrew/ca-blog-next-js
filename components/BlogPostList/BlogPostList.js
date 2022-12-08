@@ -19,7 +19,7 @@ query BlogPostListArticles {
     }
   }
 }
-`,{}, { next: { revalidate: 10 } });
+`);
 
 async function BlogPostList() {
 
