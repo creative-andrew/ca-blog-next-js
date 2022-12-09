@@ -3,6 +3,7 @@ import BlockParagraph from "./BlockParagraph/BlockParagraph";
 import BlockGroup from "./BlockGroup/BlockGroup";
 import BlockImage from "./BlockImage/BlockImage";
 import BlockHeading from "./BlockHeading/BlockHeading";
+import BlockCode from "./BlockCode/BlockCode";
 function Blocks({ blocks }) {
   return (
     <>
@@ -27,6 +28,9 @@ function Blocks({ blocks }) {
             }
             case "core/heading": {
               return <BlockHeading {...attributes} key={index} />;
+            }
+            case "kevinbatdorf/code-block-pro": {
+              return <BlockCode {...attributes} key={index} />;
             }
           }
         })}
