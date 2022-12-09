@@ -1,4 +1,6 @@
 import React from "react";
+import Tags from "../../../components/Tags/Tags";
+import Date from "../../../components/Date/Date";
 import Blocks from "../../../components/Blocks/Blocks";
 import fetchClient from "../../fetch-client";
 import postBySlugQuery from "../../../lib/queries/postBySlugQuery";
@@ -11,8 +13,12 @@ async function SinglePost({ params }) {
   } = await postBySlug(params.slug);
   return (
     <section>
-      <h2 className="text-gray-50 text-3xl pb-5">{post.title}</h2>
-      <Blocks blocks={JSON.parse(post.blocksJSON)} />
+      <h2 className="text-gray-50 text-3xl pb-3">{post?.title}</h2>
+      <div className="flex flex-wrap gap-2 items-center pt-2 pb-6 text-sm">
+        <Date dateString={post?.date} />
+        {post?.tags?.nodes && <Tags tags={post?.tags?.nodes} />}
+      </div>
+      <Blocks blocks={JSON.parse(post?.blocksJSON)} />
     </section>
   );
 }
