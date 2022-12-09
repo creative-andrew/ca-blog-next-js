@@ -4,6 +4,8 @@ import Date from "../../../components/Date/Date";
 import Blocks from "../../../components/Blocks/Blocks";
 import fetchClient from "../../fetch-client";
 import postBySlugQuery from "../../../lib/queries/postBySlugQuery";
+import postsQuery from "../../../lib/queries/postsQuery";
+
 const postBySlug = (slug) =>
   fetchClient({
     query: postBySlugQuery,
@@ -25,6 +27,17 @@ async function SinglePost({ params }) {
       <Blocks blocks={JSON.parse(post?.blocksJSON)} />
     </section>
   );
+}
+
+export async function generateStaticParams() {
+  const {
+    data: {
+      posts: { nodes: posts },
+    },
+  } = await fetchClient({ query: postsQuery, nextCache: { revalidate: 10 } });
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
 }
 
 export default SinglePost;
