@@ -5,7 +5,11 @@ import Blocks from "../../../components/Blocks/Blocks";
 import fetchClient from "../../fetch-client";
 import postBySlugQuery from "../../../lib/queries/postBySlugQuery";
 const postBySlug = (slug) =>
-  fetchClient({ query: postBySlugQuery, variables: { id: slug } });
+  fetchClient({
+    query: postBySlugQuery,
+    variables: { id: slug },
+    nextCache: { revalidate: 10 },
+  });
 
 async function SinglePost({ params }) {
   const {
