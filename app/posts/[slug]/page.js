@@ -3,11 +3,7 @@ import Blocks from "../../../components/Blocks/Blocks";
 import fetchClient from "../../fetch-client";
 import postBySlugQuery from "../../../lib/queries/postBySlugQuery";
 const postBySlug = (slug) =>
-  fetchClient(postBySlugQuery,
-    {
-      id: slug,
-    }
-  );
+  fetchClient({ query: postBySlugQuery, variables: { id: slug } });
 
 async function SinglePost({ params }) {
   const {
@@ -16,7 +12,7 @@ async function SinglePost({ params }) {
   return (
     <section>
       <h2 className="text-gray-50 text-3xl pb-5">{post.title}</h2>
-      <Blocks blocks={JSON.parse(post.blocksJSON)}/>
+      <Blocks blocks={JSON.parse(post.blocksJSON)} />
     </section>
   );
 }

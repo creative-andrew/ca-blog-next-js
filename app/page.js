@@ -5,7 +5,10 @@ import pageByURIQuery from "../lib/queries/pageByURIQuery";
 import fetchClient from "./fetch-client";
 
 const getPageByURI = async () => {
-  const res = await fetchClient(pageByURIQuery, { id: "/home" });
+  const res = await fetchClient({
+    query: pageByURIQuery,
+    variables: { id: "/home" },
+  });
   return res;
 };
 

@@ -1,29 +1,17 @@
 import React from "react";
 import BlogPostListItem from "../BlogPostListItem/BlogPostListItem";
 import fetchClient from "../../app/fetch-client";
+import postsQuery from "../../lib/queries/postsQuery";
 
-const BlogPostListArticles = () => fetchClient(`
-query BlogPostListArticles {
-  posts {
-    nodes {
-      slug
-      id
-      title
-      date
-      excerpt
-      tags {
-        nodes {
-          name
-        }
-      }
-    }
-  }
-}
-`);
+const BlogPostListArticles = () =>
+  fetchClient({ query: postsQuery, nextCache: { revalidate: 10 } });
 
 async function BlogPostList() {
-
-  const { data: { posts: { nodes: posts} } } = await BlogPostListArticles();
+  const {
+    data: {
+      posts: { nodes: posts },
+    },
+  } = await BlogPostListArticles();
 
   return (
     <section>
