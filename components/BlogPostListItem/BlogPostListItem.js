@@ -14,7 +14,8 @@ function BlogPostListItem({ post: { slug, title, excerpt, tags: { nodes: tags },
         <Date dateString={date}/>
         {tags && <Tags tags={tags}/>}
       </div>
-      <p className="text-gray-300 font-light">{striptags(excerpt)}</p>
+      <p className="text-gray-300 font-light pb-4">{striptags(excerpt)}</p>
+      <Link className="underline text-gray-300" href={`/posts/${slug}`}>Read more »</Link>
     </article>
   );
 }
