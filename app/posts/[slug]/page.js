@@ -5,7 +5,8 @@ import Blocks from "../../../components/Blocks/Blocks";
 import fetchClient from "../../fetch-client";
 import postBySlugQuery from "../../../lib/queries/postBySlugQuery";
 import postsQuery from "../../../lib/queries/postsQuery";
-
+import { previewData } from "next/headers";
+import previewPageOrPost from "../../../lib/queries/previewPageorPost";
 const postBySlug = (slug) =>
   fetchClient({
     query: postBySlugQuery,
@@ -14,9 +15,26 @@ const postBySlug = (slug) =>
   });
 
 async function SinglePost({ params }) {
-  const {
-    data: { post },
-  } = await postBySlug(params.slug);
+  let post;
+  const previewPostData = previewData();
+
+  if (!!previewPostData) {
+    const {
+      data: {
+        post: {
+          preview: { node },
+        },
+      },
+    } = await fetchClient({
+      query: previewPageOrPost(previewPostData.data.post_type),
+      variables: { id: previewPostData.data.id },
+      authRequest: true,
+    });
+    post = node;
+  } else {
+    const { data } = await postBySlug(params.slug);
+    post = data.post;
+  }
   return (
     <section>
       <h2 className="text-gray-50 text-3xl pb-3">{post?.title}</h2>
