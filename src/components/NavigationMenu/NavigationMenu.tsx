@@ -1,10 +1,16 @@
 "use client";
 
-import { React, useState } from "react";
-import NavigationLink from "../NavigationLink/NavigationLink";
+import React, { useState } from "react";
+import NavigationLink, {
+  NavigationLinkInterface,
+} from "../NavigationLink/NavigationLink";
 import NavigationMenuToggle from "../NavigationMenuToggle/NavigationMenuToggle";
 
-function NavigationMenu({ links }) {
+interface NavigationMenuLinksProps {
+  links: NavigationLinkInterface[];
+}
+
+const NavigationMenu: React.FC<NavigationMenuLinksProps> = ({ links }) => {
   function handleClick() {
     setOpen(!open);
   }
@@ -26,6 +32,6 @@ function NavigationMenu({ links }) {
       </nav>
     </>
   );
-}
+};
 
 export default NavigationMenu;

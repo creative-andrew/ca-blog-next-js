@@ -1,4 +1,4 @@
-import { React, Fragment } from "react";
+import { Fragment } from "react";
 import Blocks from "../Blocks";
 
 function BlockGroup({ innerBlocks, layout }) {

@@ -1,6 +1,12 @@
 import React from "react";
 
-function Tags({ tags }) {
+interface TagsProps {
+  tags: {
+    name: string;
+  }[];
+}
+
+const Tags: React.FC<TagsProps> = ({ tags }) => {
   return (
     <ul className="inline-flex gap-2">
       {tags.map((tag) => (
@@ -13,6 +19,5 @@ function Tags({ tags }) {
       ))}
     </ul>
   );
-}
-
+};
 export default Tags;

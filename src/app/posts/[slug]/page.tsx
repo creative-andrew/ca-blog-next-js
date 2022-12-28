@@ -3,40 +3,59 @@ import Tags from "@/components/Tags/Tags";
 import Date from "@/components/Date/Date";
 import Blocks from "@/components/Blocks/Blocks";
 import fetchClient from "@/fetch-client";
-import postBySlugQuery, { PostBySlugResponse } from "@/queries/postBySlugQuery";
-import postsQuery from "@/queries/postsQuery";
+import postBySlugQuery, {
+  PostBySlugResponse,
+  PostInterface,
+} from "@/queries/postBySlugQuery";
+import postsQuery, { BlogPostListArticlesResponse } from "@/queries/postsQuery";
 import { previewData } from "next/headers";
-import previewPost, {
-  PreviewPostDataInterface,
-} from "@/queries/previewPageorPost";
+import previewPost, { PreviewPostResponse } from "@/queries/previewPageorPost";
 
-const postBySlug = (slug, previewPostData: PreviewPostDataInterface = null) => {
-  if (!previewPostData)
-    fetchClient<PostBySlugResponse>({
+const postBySlug = async (
+  slug: string,
+  previewPostData = null
+): Promise<PostInterface> => {
+  let postData;
+  if (!previewPostData) {
+    const {
+      data: { post },
+    } = await fetchClient<PostBySlugResponse>({
       query: postBySlugQuery,
       variables: { id: slug },
       nextCache: { revalidate: 10 },
     });
-  else {
-    fetchClient({
+    postData = post;
+  } else {
+    const {
+      data: {
+        post: {
+          preview: { node },
+        },
+      },
+    } = await fetchClient<PreviewPostResponse>({
       query: previewPost(previewPostData.data.post_type),
       variables: { id: previewPostData.data.id },
       authRequest: true,
     });
+    postData = node;
   }
+  return postData;
 };
 
 async function SinglePost({ params }) {
   const previewPostData = previewData();
-  const { data: post } = await postBySlug(params.slug);
+  const { title, date, tags, blocksJSON } = await postBySlug(
+    params.slug,
+    previewPostData
+  );
   return (
     <section>
-      <h2 className="text-gray-50 text-3xl pb-3">{post?.title}</h2>
+      <h2 className="text-gray-50 text-3xl pb-3">{title}</h2>
       <div className="flex flex-wrap gap-2 items-center pt-2 pb-6 text-sm">
-        <Date dateString={post?.date} />
-        {post?.tags?.nodes && <Tags tags={post?.tags?.nodes} />}
+        <Date dateString={date} />
+        {tags?.nodes && <Tags tags={tags?.nodes} />}
       </div>
-      <Blocks blocks={JSON.parse(post?.blocksJSON)} />
+      <Blocks blocks={JSON.parse(blocksJSON)} />
     </section>
   );
 }
@@ -46,7 +65,10 @@ export async function generateStaticParams() {
     data: {
       posts: { nodes: posts },
     },
-  } = await fetchClient({ query: postsQuery, nextCache: { revalidate: 10 } });
+  } = await fetchClient<BlogPostListArticlesResponse>({
+    query: postsQuery,
+    nextCache: { revalidate: 10 },
+  });
   return posts.map((post) => ({
     slug: post.slug,
   }));

@@ -1,6 +1,14 @@
 import React from "react";
 
-function NavigationMenuToggle({ handleClick, open }) {
+interface NavigationMenuToggleProps {
+  handleClick: () => void;
+  open: boolean;
+}
+
+const NavigationMenuToggle: React.FC<NavigationMenuToggleProps> = ({
+  handleClick,
+  open,
+}) => {
   return (
     <button
       onClick={handleClick}
@@ -9,6 +17,6 @@ function NavigationMenuToggle({ handleClick, open }) {
       {!open ? "☰" : "×"}
     </button>
   );
-}
+};
 
 export default NavigationMenuToggle;

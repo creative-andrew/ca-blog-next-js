@@ -1,4 +1,9 @@
-export default async function handler(req, res) {
+import { NextApiRequest, NextApiResponse } from "next";
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const { secret, id, slug, post_type } = req.query;
 
   // Check the secret and next parameters
