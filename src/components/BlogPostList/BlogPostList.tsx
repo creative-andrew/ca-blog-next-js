@@ -11,7 +11,7 @@ const BlogPostListArticles = () =>
     nextCache: { revalidate: 10 },
   });
 
-const BlogPostList = async () => {
+const BlogPostList = async ():((as unknown) as React.FC) => {
   const {
     data: {
       posts: { nodes: posts },
@@ -25,6 +25,6 @@ const BlogPostList = async () => {
       ))}
     </section>
   );
-};
+} ;
 
 export default BlogPostList;
