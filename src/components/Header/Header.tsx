@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { React } from "react";
+import React from "react";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
 import fetchClient from "../../fetch-client";
 import headerAndMenus, {
@@ -13,6 +13,7 @@ const getHeaderAndMenus = async () => {
   return res;
 };
 
+/* @ts-expect-error Server Component */
 const Header: React.FC = async () => {
   const {
     data: {
