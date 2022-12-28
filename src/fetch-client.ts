@@ -1,12 +1,26 @@
-async function fetchClient(options = {}) {
-  const { query, variables, cachePolicy, nextCache, authRequest } = options;
+interface FetchClientParams {
+  query: string;
+  variables?: Record<string, any>;
+  cachePolicy?: "force-cache" | "no-store";
+  nextCache?: { revalidate: number };
+  authRequest?: boolean;
+}
 
+const fetchClient = async <T = {}>({
+  query,
+  variables,
+  cachePolicy,
+  nextCache,
+  authRequest,
+}: FetchClientParams): Promise<{ data: T }> => {
   const headers = {
     "Content-Type": "application/json",
-  }
+  };
 
   if (authRequest && process.env.WORDPRESS_AUTH_REFRESH_TOKEN) {
-    headers['Authorization'] = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`
+    headers[
+      "Authorization"
+    ] = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`;
   }
 
   const res = await fetch(`http://${process.env.WORDPRESS_URL}/graphql`, {
@@ -26,6 +40,6 @@ async function fetchClient(options = {}) {
   }
 
   return res.json();
-}
+};
 
 export default fetchClient;

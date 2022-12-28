@@ -1,15 +1,19 @@
 import Link from "next/link";
 import { React } from "react";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
-import fetchClient from "../../app/fetch-client";
-import headerAndMenus from "../../lib/queries/headerAndMenusQuery";
+import fetchClient from "../../fetch-client";
+import headerAndMenus, {
+  GetHeaderAndMenusResponse,
+} from "../../queries/headerAndMenusQuery";
 
 const getHeaderAndMenus = async () => {
-  const res = await fetchClient({ query: headerAndMenus });
+  const res = await fetchClient<GetHeaderAndMenusResponse>({
+    query: headerAndMenus,
+  });
   return res;
 };
 
-async function Header() {
+const Header: React.FC = async () => {
   const {
     data: {
       generalSettings,
@@ -29,6 +33,6 @@ async function Header() {
       <NavigationMenu links={menuItems?.nodes} />
     </header>
   );
-}
+};
 
 export default Header;

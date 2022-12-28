@@ -1,12 +1,17 @@
 import React from "react";
 import BlogPostListItem from "../BlogPostListItem/BlogPostListItem";
-import fetchClient from "../../app/fetch-client";
-import postsQuery from "../../lib/queries/postsQuery";
+import fetchClient from "../../fetch-client";
+import postsQuery, {
+  BlogPostListArticlesResponse,
+} from "../../queries/postsQuery";
 
 const BlogPostListArticles = () =>
-  fetchClient({ query: postsQuery, nextCache: { revalidate: 10 } });
+  fetchClient<BlogPostListArticlesResponse>({
+    query: postsQuery,
+    nextCache: { revalidate: 10 },
+  });
 
-async function BlogPostList() {
+const BlogPostList = (async () => {
   const {
     data: {
       posts: { nodes: posts },
@@ -20,6 +25,6 @@ async function BlogPostList() {
       ))}
     </section>
   );
-}
+}) as unknown as React.FC;
 
 export default BlogPostList;
