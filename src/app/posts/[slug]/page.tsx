@@ -9,7 +9,7 @@ import postBySlugQuery, {
 } from "@/queries/postBySlugQuery";
 import postsQuery, { BlogPostListArticlesResponse } from "@/queries/postsQuery";
 import { previewData } from "next/headers";
-import previewPost, { PreviewPostResponse } from "@/queries/previewPageorPost";
+import previewPost, { PreviewPostResponse } from "@/queries/previewPost";
 
 const postBySlug = async (
   slug: string,
