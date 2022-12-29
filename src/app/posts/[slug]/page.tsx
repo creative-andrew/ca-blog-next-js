@@ -3,51 +3,29 @@ import Tags from "@/components/Tags/Tags";
 import Date from "@/components/Date/Date";
 import Blocks from "@/components/Blocks/Blocks";
 import fetchClient from "@/fetch-client";
-import postBySlugQuery, {
-  PostBySlugResponse,
-  PostInterface,
-} from "@/queries/postBySlugQuery";
+import postBySlugQuery, { PostBySlugResponse } from "@/queries/postBySlugQuery";
 import postsQuery, { BlogPostListArticlesResponse } from "@/queries/postsQuery";
 import { previewData } from "next/headers";
-import previewPost, { PreviewPostResponse } from "@/queries/previewPost";
 
-const postBySlug = async (
-  slug: string,
-  previewPostData = null
-): Promise<PostInterface> => {
-  let postData;
-  if (!previewPostData) {
-    const {
-      data: { post },
-    } = await fetchClient<PostBySlugResponse>({
-      query: postBySlugQuery,
-      variables: { id: slug },
-      nextCache: { revalidate: 10 },
-    });
-    postData = post;
-  } else {
-    const {
-      data: {
-        post: {
-          preview: { node },
-        },
-      },
-    } = await fetchClient<PreviewPostResponse>({
-      query: previewPost(previewPostData.data.post_type),
-      variables: { id: previewPostData.data.id },
-      authRequest: true,
-    });
-    postData = node;
-  }
-  return postData;
+const getPostBySlug = async (slug: string, previewPostData = null) => {
+  const {
+    data: { post },
+  } = await fetchClient<PostBySlugResponse>({
+    query: postBySlugQuery(!!previewPostData),
+    variables: { id: previewPostData ? previewPostData.data.slug : slug },
+    authRequest: previewPostData ? true : undefined,
+  });
+
+  return post.preview ? post.preview.node : post;
 };
 
 async function SinglePost({ params }) {
   const previewPostData = previewData();
-  const { title, date, tags, blocksJSON } = await postBySlug(
+  const { title, date, tags, blocksJSON } = await getPostBySlug(
     params.slug,
     previewPostData
   );
+
   return (
     <section>
       <h2 className="text-gray-50 text-3xl pb-3">{title}</h2>

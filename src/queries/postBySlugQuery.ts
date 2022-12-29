@@ -1,30 +1,30 @@
-export interface PostInterface {
+export interface PostBySlugResponse {
+  post: Post;
+}
+
+export interface Post {
   title: string;
   blocksJSON: string;
   date: string;
   tags: {
     nodes: {
-      name;
+      name: string;
     }[];
+  };
+  preview?: {
+    node: Post;
   };
 }
 
-export interface PostBySlugResponse {
-  post: PostInterface;
-}
-
-const postBySlug = `
-query postBySlug($id: ID!) {
+const postBySlugQuery = (isPreview: boolean) => `
+query getPostBySlug($id: ID!) {
     post(id: $id, idType: SLUG) {
-      title
-      blocksJSON
-      date
-      tags {
-        nodes {
-          name
-        }
+      ${
+        isPreview
+          ? "preview { node { title blocksJSON date tags { nodes { name } } } }"
+          : "title blocksJSON date tags { nodes { name } }"
       }
     }
   }
 `;
-export default postBySlug;
+export default postBySlugQuery;
