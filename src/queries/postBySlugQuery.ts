@@ -21,8 +21,26 @@ query getPostBySlug($id: ID!) {
     post(id: $id, idType: SLUG) {
       ${
         isPreview
-          ? "preview { node { title blocksJSON date tags { nodes { name } } } }"
-          : "title blocksJSON date tags { nodes { name } }"
+          ? `preview {
+              node {
+                title
+                blocksJSON
+                date
+                tags {
+                  nodes {
+                    name
+                  }
+                }
+              }
+            }`
+          : `title
+            blocksJSON
+            date
+            tags {
+              nodes {
+                name
+              }
+            }`
       }
     }
   }
