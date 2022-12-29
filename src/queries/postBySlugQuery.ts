@@ -1,5 +1,5 @@
 export interface PostBySlugResponse {
-  post: Post;
+  post: Post | null;
 }
 
 export interface Post {

@@ -1,4 +1,5 @@
 import React from "react";
+import { notFound } from "next/navigation";
 import Tags from "@/components/Tags/Tags";
 import Date from "@/components/Date/Date";
 import Blocks from "@/components/Blocks/Blocks";
@@ -16,15 +17,18 @@ const getPostBySlug = async (slug: string, previewPostData = null) => {
     authRequest: previewPostData ? true : undefined,
   });
 
-  return post.preview ? post.preview.node : post;
+  return post?.preview ? post.preview?.node : post;
 };
 
 async function SinglePost({ params }) {
   const previewPostData = previewData();
-  const { title, date, tags, blocksJSON } = await getPostBySlug(
-    params.slug,
-    previewPostData
-  );
+  const post = await getPostBySlug(params.slug, previewPostData);
+
+  if (!post) {
+    notFound();
+  }
+
+  const { title, date, tags, blocksJSON } = post;
 
   return (
     <section>
