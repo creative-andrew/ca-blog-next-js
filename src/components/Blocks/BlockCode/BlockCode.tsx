@@ -49,7 +49,7 @@ function BlockCode({ language, code }) {
         style={nord}
         customStyle={{
           fontFamily: "inherit",
-          background: "rgb(31 41 55 / var(--tw-bg-opacity)",
+          background: "rgb(31 41 55 / var(--tw-bg-opacity))",
         }}
       >
         {code}
