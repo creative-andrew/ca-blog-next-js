@@ -45,6 +45,7 @@ function BlockCode({ language, code }) {
         language={language}
         wrapLongLines={true}
         wrapLines={true}
+        lineProps={{style: {wordBreak: 'break-all', whiteSpace: 'pre-wrap'}}}
         style={nord}
         customStyle={{
           fontFamily: "inherit",
