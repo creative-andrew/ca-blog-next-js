@@ -22,7 +22,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
         className={`flex flex-wrap bg-gray-900 p-6 pt-10 gap-8 min-h-screen ${poppins.className}`}
       >
         <Header />
-        <main className="flex-1 max-w-4xl mx-auto">{children}</main>
+        <main className="flex-1 mx-auto w-full md:max-w-4xl">{children}</main>
         <footer className="min-w-full self-end text-gray-300">
           Powered by WordPress & Next.js
         </footer>
