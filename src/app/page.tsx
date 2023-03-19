@@ -10,6 +10,7 @@ const getPageByURI = async () => {
   const res = await fetchClient<PageByURIQueryResponse>({
     query: pageByURIQuery,
     variables: { id: "/home" },
+    nextCache: { revalidate: 10 },
   });
 
   return res;
