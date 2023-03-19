@@ -50,6 +50,7 @@ function BlockCode({ language, code }) {
         customStyle={{
           fontFamily: "inherit",
           background: "rgb(31 41 55 / var(--tw-bg-opacity))",
+          padding: 0,
         }}
       >
         {code}
