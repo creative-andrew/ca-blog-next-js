@@ -8,7 +8,7 @@ interface TagsProps {
 
 const Tags: React.FC<TagsProps> = ({ tags }) => {
   return (
-    <ul className="inline-flex gap-2">
+    <ul className="inline-flex gap-2 flex-wrap">
       {tags.map((tag) => (
         <li
           key={tag.name}
