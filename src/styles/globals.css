@@ -3,5 +3,9 @@
 @tailwind utilities;
 
 p a {
-  text-decoration: underline;
+  @apply underline
+}
+
+p code {
+  @apply text-white bg-slate-800 pl-1 pr-1;
 }

@@ -3,6 +3,7 @@
 import React from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { nord } from "react-syntax-highlighter/dist/esm/styles/prism";
+import {decode} from 'html-entities';
 function BlockCode({ language, code }) {
   return (
     <div className="bg-slate-800 p-4 rounded mb-5">
@@ -49,11 +50,11 @@ function BlockCode({ language, code }) {
         style={nord}
         customStyle={{
           fontFamily: "inherit",
-          background: "rgb(31 41 55 / var(--tw-bg-opacity))",
-          padding: 0,
+          background: "rgb(31 41 59 / var(--tw-bg-opacity))",
+          padding: 0
         }}
       >
-        {code}
+        {decode(code)}
       </SyntaxHighlighter>
     </div>
   );
