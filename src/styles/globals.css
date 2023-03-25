@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 p a {
-  @apply underline
+  @apply underline;
 }
 
 p code {
