@@ -1,4 +1,4 @@
-import { Poppins } from "@next/font/google";
+import { Poppins } from "next/font/google";
 
 import fetchClient from "../fetch-client";
 import Header from "../components/Header/Header";
