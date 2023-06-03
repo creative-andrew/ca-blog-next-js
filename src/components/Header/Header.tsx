@@ -13,7 +13,7 @@ const getHeaderAndMenus = async () => {
   return res;
 };
 
-/* @ts-expect-error Server Component */
+// @ts-ignore
 const Header: React.FC = async () => {
   const {
     data: {

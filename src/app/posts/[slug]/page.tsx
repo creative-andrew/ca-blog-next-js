@@ -61,6 +61,7 @@ export async function generateMetadata({ params }) {
   const {
     data: {
       post: {
+        // @ts-ignore
         seo: { title, metaDesc },
       },
     },

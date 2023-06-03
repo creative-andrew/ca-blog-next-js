@@ -23,7 +23,7 @@ const Home = async () => {
   return (
     <div className="flex flex-wrap flex-col-reverse md:block">
       <Blocks blocks={JSON.parse(page.blocksJSON)} />
-      {/* @ts-expect-error Server Component */}
+      {/* @ts-ignore */}
       <BlogPostList />
     </div>
   );

@@ -11,6 +11,10 @@ export interface BlogPostListArticlesResponse {
           name: string;
         }[];
       };
+      seo: {
+        title: string;
+        metaDesc?: string;
+      };
     }[];
   };
 }
