@@ -58,18 +58,13 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }) {
+  const post = await getPostBySlug(params.slug);
+  if (!post) {
+    return {};
+  }
   const {
-    data: {
-      post: {
-        // @ts-ignore
-        seo: { title, metaDesc },
-      },
-    },
-  } = await fetchClient<PostBySlugResponse>({
-    query: postBySlugQuery(),
-    variables: { id: params.slug },
-    nextCache: { revalidate: 10 },
-  });
+    seo: { title, metaDesc },
+  } = post;
 
   return {
     title,
