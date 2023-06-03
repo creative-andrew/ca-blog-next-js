@@ -6,23 +6,24 @@ import Blocks from "@/components/Blocks/Blocks";
 import fetchClient from "@/fetch-client";
 import postBySlugQuery, { PostBySlugResponse } from "@/queries/postBySlugQuery";
 import postsQuery, { BlogPostListArticlesResponse } from "@/queries/postsQuery";
-import { previewData } from "next/headers";
+import { draftMode } from "next/headers";
 
-const getPostBySlug = async (slug: string, previewPostData = null) => {
+const getPostBySlug = async (slug: string) => {
+  const { isEnabled } = draftMode();
   const {
     data: { post },
   } = await fetchClient<PostBySlugResponse>({
-    query: postBySlugQuery(!!previewPostData),
-    variables: { id: previewPostData ? previewPostData.data.slug : slug },
-    authRequest: previewPostData ? true : undefined,
+    query: postBySlugQuery(!!isEnabled),
+    variables: { id: slug },
+    authRequest: isEnabled ? true : undefined,
+    cachePolicy: isEnabled ? "no-store" : undefined,
   });
 
   return post?.preview ? post.preview?.node : post;
 };
 
 async function SinglePost({ params }) {
-  const previewPostData = previewData();
-  const post = await getPostBySlug(params.slug, previewPostData);
+  const post = await getPostBySlug(params.slug);
 
   if (!post) {
     notFound();
@@ -54,6 +55,25 @@ export async function generateStaticParams() {
   return posts.map((post) => ({
     slug: post.slug,
   }));
+}
+
+export async function generateMetadata({ params }) {
+  const {
+    data: {
+      post: {
+        seo: { title, metaDesc },
+      },
+    },
+  } = await fetchClient<PostBySlugResponse>({
+    query: postBySlugQuery(),
+    variables: { id: params.slug },
+    nextCache: { revalidate: 10 },
+  });
+
+  return {
+    title,
+    description: metaDesc,
+  };
 }
 
 export default SinglePost;

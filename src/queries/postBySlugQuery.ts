@@ -14,13 +14,17 @@ export interface Post {
   preview?: {
     node: Post;
   };
+  seo: {
+    title: string;
+    metaDesc?: string;
+  };
 }
 
-const postBySlugQuery = (isPreview: boolean) => `
+const postBySlugQuery = (isEnabled: boolean = false) => `
 query getPostBySlug($id: ID!) {
     post(id: $id, idType: SLUG) {
       ${
-        isPreview
+        isEnabled
           ? `preview {
               node {
                 title
@@ -36,6 +40,10 @@ query getPostBySlug($id: ID!) {
           : `title
             blocksJSON
             date
+            seo {
+              title
+              metaDesc
+            }
             tags {
               nodes {
                 name

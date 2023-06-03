@@ -14,24 +14,24 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@next/font": "^13.0.6",
     "date-fns": "^2.29.3",
-    "eslint": "8.29.0",
-    "eslint-config-next": "13.0.6",
+    "eslint": "^8.42.0",
+    "eslint-config-next": "^13.4.4",
     "html-entities": "^2.3.3",
-    "html-react-parser": "^3.0.4",
-    "next": "13.0.6",
+    "html-react-parser": "^4.0.0",
+    "next": "^13.4.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-syntax-highlighter": "^15.5.0",
     "striptags": "^3.2.0"
   },
   "devDependencies": {
-    "@types/node": "18.11.17",
-    "@types/react": "18.0.26",
+    "@types/node": "^20.2.5",
+    "@types/react": "^18.2.8",
     "@types/react-html-parser": "^2.0.2",
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.19",
     "standard": "^17.0.0",
     "tailwindcss": "^3.2.4",
-    "typescript": "^4.9.4"
+    "typescript": "^5.1.3"
   }
 }

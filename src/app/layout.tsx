@@ -1,5 +1,10 @@
 import { Poppins } from "@next/font/google";
+
+import fetchClient from "../fetch-client";
 import Header from "../components/Header/Header";
+import headerAndMenus, {
+  GetHeaderAndMenusResponse,
+} from "../queries/headerAndMenusQuery";
 import "@/styles/globals.css";
 
 const poppins = Poppins({
@@ -32,3 +37,18 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
 };
 
 export default RootLayout;
+
+export async function generateMetadata() {
+  const {
+    data: {
+      generalSettings: { title, description },
+    },
+  } = await fetchClient<GetHeaderAndMenusResponse>({
+    query: headerAndMenus,
+    nextCache: { revalidate: 10 },
+  });
+  return {
+    title,
+    description,
+  };
+}
