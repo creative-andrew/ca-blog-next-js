@@ -14,7 +14,7 @@ export default async function sitemap() {
   });
   const postsSlugs = posts.map(({ slug, date }) => ({
     url: `${URL}/posts/${slug}`,
-    lastModified: date,
+    lastModified: new Date(date).toISOString(),
   }));
 
   const routes = [""].map((route) => ({
